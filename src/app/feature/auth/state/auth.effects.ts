@@ -7,7 +7,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { ApiErrorResponse, LoginResponse } from '../models/auth.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../../app.state';
+import { AppState } from '../../../app.state';
 import * as CartActions from '../state/auth.actions';
 
 @Injectable()
@@ -24,7 +24,6 @@ export class AuthEffects {
       exhaustMap(action => {
         return this.authService.login(action.loginRequestBody).pipe(
           map(response => {
-              this.router.navigateByUrl('/products');
               return AuthActions.loginSuccess({ loginResponse: response });
           }),
           catchError(error => {

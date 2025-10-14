@@ -20,7 +20,7 @@ import { RouterLink } from '@angular/router';
 import { Address, SignupRequestBody } from '../models/auth.model';
 import { Store } from '@ngrx/store';
 import { selectAuthError, selectAuthLoading } from '../state/auth.selectors';
-import { AppState } from '../../../../app.state';
+import { AppState } from '../../../app.state';
 import * as AuthActions from '../../auth/state/auth.actions';
 
 @Component({

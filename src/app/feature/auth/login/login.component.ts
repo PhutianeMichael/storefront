@@ -9,7 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Store } from '@ngrx/store';
 import * as AuthActions from '../state/auth.actions';
 import { selectAuthError, selectAuthLoading } from '../state/auth.selectors';
-import { AppState } from '../../../../app.state';
+import { AppState } from '../../../app.state';
 import { RouterLink } from '@angular/router';
 
 @Component({
