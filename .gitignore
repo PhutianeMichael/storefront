@@ -4,16 +4,18 @@
 /tmp/
 /coverage/
 /e2e/test-output/
-/.angular/
+.angular/
 .angular/
 
 # Node modules and dependency files
 /node_modules/
 /package-lock.json
 /yarn.lock
+/pnpm-lock.yaml
 
 # Environment files
 /.env
+/.env.*
 
 # Angular CLI and build artefacts
 /.angular-cli.json
@@ -26,3 +28,98 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# IDEs and editors
+/.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+
+# OS generated files
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Test output
+/test-results/
+/test-output/
+/junit/
+
+# Miscellaneous
+*.log
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+
+# Compiled output
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+*.o
+*.obj
+*.pyc
+*.pyo
+*.pyd
+
+# Coverage reports
+/coverage/
+/coverage-final.json
+/coverage-summary.json
+
+# Reports
+/lcov-report/
+/lcov.info
+
+# Firebase
+.firebase/
+.firebaserc
+
+# Storybook
+out/
+storybook-static/
+
+# Cypress
+/cypress/screenshots/
+/cypress/videos/
+/cypress/results/
+
+# Playwright
+/test-results/
+/playwright-report/
+
+# SASS cache
+.sass-cache/
+
+# NPM cache
+.npm/
+
+# Yarn cache
+.yarn/
+
+# VSCode settings
+.settings/
+
+# JetBrains IDEs
+.idea/
+*.iml
+
+# Mac system files
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Linux system files
+*~
+
+# End of file
