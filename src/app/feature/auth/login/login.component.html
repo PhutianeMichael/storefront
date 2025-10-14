@@ -1,4 +1,3 @@
-
 <div class="login-page">
   <h1 class="login-title">Welcome back</h1>
   <p class="login-subtitle">Sign in to continue shopping</p>
@@ -6,9 +5,9 @@
   <form [formGroup]="form" (ngSubmit)="onSubmit(loading())" class="login-form" autocomplete="on">
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Email</mat-label>
-      <input matInput type="email" formControlName="email" placeholder="you@example.com" />
+      <input matInput type="email" formControlName="email" placeholder="you@example.com"/>
       <mat-icon matSuffix>mail</mat-icon>
-      @if(email.touched && email.hasError('required')) {
+      @if (email.touched && email.hasError('required')) {
         <mat-error>Email is required</mat-error>
       }
       @if (email.touched && email.hasError('email')) {
@@ -25,14 +24,15 @@
         formControlName="password"
         placeholder="••••••••"
       />
-      <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Toggle password visibility'">
+      <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Toggle password visibility'">
         <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
       </button>
-      @if(password.touched && password.hasError('required')) {
+      @if (password.touched && password.hasError('required')) {
         <mat-error>Password is required</mat-error>
       }
 
-      @if(password.touched && password.hasError('minlength')) {
+      @if (password.touched && password.hasError('minlength')) {
         <mat-error>Minimum 6 characters</mat-error>
       }
     </mat-form-field>
@@ -49,7 +49,7 @@
       type="submit"
       [disabled]="form.invalid || loading()"
     >
-      @if(!loading()) {
+      @if (!loading()) {
         <ng-container>
           <mat-icon class="left btn-icon">login</mat-icon>
           <span class="btn-label">Sign in</span>
@@ -59,8 +59,8 @@
       }
     </button>
 
-    @if(errorMessage()) {
-      <div class="error" >{{ errorMessage() }}</div>
+    @if (errorMessage()) {
+      <div class="error">{{ errorMessage() }}</div>
     }
 
     <p class="signup-hint">

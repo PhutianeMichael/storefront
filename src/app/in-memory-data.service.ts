@@ -20,47 +20,63 @@ export class InMemoryDataService implements InMemoryDbService {
             city: "Johannesburg",
             provinceOrState: "Gauteng",
             code: "2094",
-            country: "South Africa"
-          }
+            country: "South Africa",
+          },
         ],
         id: 1757590735311,
         role: Role.USER,
-        passwordHash: "$2b$10$hQxjg4J43SmZrN.gA3XutOXioafWI1PNtz.blatCm3LgU8cg8NpkC"
+        passwordHash: "$2b$10$hQxjg4J43SmZrN.gA3XutOXioafWI1PNtz.blatCm3LgU8cg8NpkC",
       },
-      { id: 1, firstname: 'John', lastname: 'Doe', role: Role.USER, email: 'john@mail.com', passwordHash: bcrypt.hashSync('password@1234', salt), address: [
-        {
-          street: '123 Main St',
-          city: 'Anytown',
-          provinceOrState: 'CA',
-          code: '12345',
-          country: 'USA'
-        },
-        {
-          street: '456 Oak St',
-          city: 'Othertown',
-          provinceOrState: 'TX',
-          code: '67890',
-          country: 'USA'
-        }
-      ]},
-      { id: 2, firstname: 'Jane', lastname: 'Doe', role: Role.ADMIN, email: 'jane@mail.com', passwordHash: bcrypt.hashSync('password@1234', salt), address: [
-        {
-          street: '123 Main St',
-          city: 'Anytown',
-          provinceOrState: 'CA',
-          code: '12345',
-          country: 'USA'
-        },
-        {
-          street: '456 Oak St',
-          city: 'Othertown',
-          provinceOrState: 'TX',
-          code: '67890',
-          country: 'USA'
-        }
-      ] }
+      {
+        id: 1,
+        firstname: 'John',
+        lastname: 'Doe',
+        role: Role.USER,
+        email: 'john@mail.com',
+        passwordHash: bcrypt.hashSync('password@1234', salt),
+        address: [
+          {
+            street: '123 Main St',
+            city: 'Anytown',
+            provinceOrState: 'CA',
+            code: '12345',
+            country: 'USA',
+          },
+          {
+            street: '456 Oak St',
+            city: 'Othertown',
+            provinceOrState: 'TX',
+            code: '67890',
+            country: 'USA',
+          },
+        ],
+      },
+      {
+        id: 2,
+        firstname: 'Jane',
+        lastname: 'Doe',
+        role: Role.ADMIN,
+        email: 'jane@mail.com',
+        passwordHash: bcrypt.hashSync('password@1234', salt),
+        address: [
+          {
+            street: '123 Main St',
+            city: 'Anytown',
+            provinceOrState: 'CA',
+            code: '12345',
+            country: 'USA',
+          },
+          {
+            street: '456 Oak St',
+            city: 'Othertown',
+            provinceOrState: 'TX',
+            code: '67890',
+            country: 'USA',
+          },
+        ],
+      },
     ];
-    return { users };
+    return {users};
   }
 
   post(reqInfo: any) {
@@ -69,10 +85,10 @@ export class InMemoryDataService implements InMemoryDbService {
       const userInDb = reqInfo.utils.getDb().users.find((u: any) => u.email === body.email);
       if (userInDb) {
         return reqInfo.utils.createResponse$(() => ({
-          body: { message: 'User with this email already exists' },
+          body: {message: 'User with this email already exists'},
           status: 409,
           headers: reqInfo.headers,
-          url: reqInfo.url
+          url: reqInfo.url,
         } as ApiErrorResponse));
       }
       const salt = bcrypt.genSaltSync(10);
@@ -95,11 +111,11 @@ export class InMemoryDataService implements InMemoryDbService {
             lastname: user.lastname,
             email: user.email,
             role: user.role || Role.USER,
-          }
+          },
         } as AuthResponse,
         status: 201,
         headers: reqInfo.headers,
-        url: reqInfo.url
+        url: reqInfo.url,
       }));
     }
     if (reqInfo.req.url.endsWith('/auth/login')) {
@@ -107,22 +123,23 @@ export class InMemoryDataService implements InMemoryDbService {
       const users = reqInfo.utils.getDb().users;
       const user = users.find((u: any) => u.email === body.email);
       if (user && bcrypt.compareSync(body.password, user.passwordHash)) {
-        const { passwordHash, address, ...userWithoutHash } = user;
+        const {passwordHash, address, ...userWithoutHash} = user;
         const token = Math.random().toString(36).substring(2) + Date.now();
         return reqInfo.utils.createResponse$(() => ({
           body: {
             user: userWithoutHash,
-            token },
+            token,
+          },
           status: 200,
           headers: reqInfo.headers,
-          url: reqInfo.url
+          url: reqInfo.url,
         }));
       } else {
         return reqInfo.utils.createResponse$(() => ({
-          body: { message: 'Invalid email or password' },
+          body: {message: 'Invalid email or password'},
           status: 401,
           headers: reqInfo.headers,
-          url: reqInfo.url
+          url: reqInfo.url,
         } as ApiErrorResponse));
       }
     }

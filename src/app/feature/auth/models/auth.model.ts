@@ -38,6 +38,7 @@ export interface SignupRequestBody {
   password: string;
   address: Address[];
 }
+
 export interface AuthState {
   user: UserModel | null;
   token: string | null;
@@ -61,7 +62,6 @@ export interface ApiErrorResponse {
 export interface AuthResponse {
   user: Omit<User, 'passwordHash' | 'address'>;
 }
-
 
 export type UserModel = Omit<User, 'passwordHash' | 'address'>;
 export const AUTH_STORAGE_KEY = 'auth_data';

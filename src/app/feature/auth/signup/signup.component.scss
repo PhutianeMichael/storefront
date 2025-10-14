@@ -28,6 +28,7 @@
 
     .full-width {
       width: 100%;
+
       mat-icon {
         color: #8bacd3;
       }
@@ -37,6 +38,7 @@
       border: 1px solid #e5e7eb;
       border-radius: 8px;
       padding-inline: 0.2rem;
+
       .section-title {
         font-size: 1.1rem;
         font-weight: 600;
@@ -44,17 +46,21 @@
         color: #374151;
         text-align: center;
       }
+
       .address-list {
         display: flex;
         flex-direction: column;
         gap: 0.25rem;
+
         .address-item {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
           margin-bottom: 0.5rem;
+
           .address-header {
             margin-bottom: 0.5rem;
+
             .address-heading {
               font-weight: 500;
               color: #6b7280;
@@ -63,13 +69,16 @@
             .mat-mdc-icon-button {
               background-color: white;
               position: relative;
-              top:4px;
+              top: 4px;
               left: 2px;
+
               .delete-cta {
                 color: #ef4444;
               }
+
               &:hover {
                 background-color: #ef4444;
+
                 .delete-cta {
                   color: #f3f4f6;
                 }
@@ -78,6 +87,7 @@
           }
         }
       }
+
       .add-address-cta {
         margin-top: 0.5rem;
         margin-bottom: 0.3rem;
@@ -87,6 +97,7 @@
         border-color: #8bacd3;
         border-radius: 0.2rem;
         width: 100%;
+
         &:hover {
           background-color: #8bacd3;
           color: #fef2f2;
@@ -152,7 +163,6 @@
     }
   }
 }
-
 
 
 @media (max-width: 600px) {

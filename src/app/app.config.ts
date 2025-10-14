@@ -13,17 +13,20 @@ import { InMemoryDataService } from './in-memory-data.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
     provideStore(),
     provideState(authFeatureKey, authReducer),
-    provideEffects([ AuthEffects]),
+    provideEffects([AuthEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: false,
       autoPause: true,
     }),
-    importProvidersFrom(HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, { delay: 500, passThruUnknownUrl: true })),
-  ]
+    importProvidersFrom(HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
+      delay: 500,
+      passThruUnknownUrl: true,
+    })),
+  ],
 };

@@ -1,51 +1,50 @@
-
 import { createSelector } from '@ngrx/store';
 import { Role } from '../models/auth.model';
 import { selectAuthState } from '../../../app.state';
 
 export const selectAuth = createSelector(
   selectAuthState,
-  (state) => state
+  (state) => state,
 );
 
 export const selectIsAuthenticated = createSelector(
   selectAuth,
-  (state) => state.isAuthenticated
+  (state) => state.isAuthenticated,
 );
 
 export const selectAuthUser = createSelector(
   selectAuth,
-  (state) => state.user
+  (state) => state.user,
 );
 
 export const selectAuthToken = createSelector(
   selectAuth,
-  (state) => state.token
+  (state) => state.token,
 );
 
 export const selectAuthLoading = createSelector(
   selectAuth,
-  (state) => state.loading
+  (state) => state.loading,
 );
 
 export const selectAuthError = createSelector(
   selectAuth,
-  (state) => state.error
+  (state) => state.error,
 );
 
 export const selectIsAdmin = createSelector(
   selectAuthUser,
-  (user) => user?.role === Role.ADMIN
+  (user) => user?.role === Role.ADMIN,
 );
 
 export const selectUsername = createSelector(
   selectAuthUser,
-  (user) => user?.firstname + ' ' + user?.lastname
+  (user) => user?.firstname + ' ' + user?.lastname,
 );
 
 export const selectAuthUserId = createSelector(
   selectAuthUser,
-  (user) => user?.id
+  (user) => user?.id,
 );
 
 

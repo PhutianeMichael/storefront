@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 
-
 export const routes: Routes = [
   {
     path: 'login',
@@ -9,5 +8,5 @@ export const routes: Routes = [
   {
     path: 'signup',
     loadComponent: () => import('./feature/auth/signup/signup.component').then(m => m.SignupComponent),
-  }
+  },
 ];
