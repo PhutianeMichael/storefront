@@ -22,6 +22,7 @@ export class AuthEffects {
       exhaustMap(action => {
         return this.authService.login(action.loginRequestBody).pipe(
           map(response => {
+            this.router.navigateByUrl('/products');
             return AuthActions.loginSuccess({loginResponse: response});
           }),
           catchError(error => {

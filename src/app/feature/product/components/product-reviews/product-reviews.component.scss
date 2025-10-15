@@ -1,0 +1,113 @@
+:host {
+  display: block;
+  padding: 16px;
+
+  button[mat-stroked-button] {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.5rem 1rem;
+    border: 1px solid #8bacd3;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #8bacd3;
+    background-color: transparent;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+    mat-icon {
+      font-size: 20px;
+      height: 20px;
+      width: 20px;
+      color: inherit;
+    }
+
+    &:hover {
+      background-color: #8bacd3;
+      color: #ffffff;
+      border-color: #8bacd3;
+
+      mat-icon {
+        color: inherit;
+      }
+    }
+  }
+
+  mat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+
+    mat-list-item {
+      border: 1px solid #e5e7eb;
+      height: 100%;
+      border-radius: 10px;
+      padding: 16px 20px;
+      background-color: #ffffff;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+      .review-header {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        align-items: center;
+        gap: 8px 12px;
+        margin-bottom: 6px;
+
+        .reviewer {
+          font-weight: 600;
+          color: #1f2937;
+        }
+
+        .review-date {
+          font-size: 12px;
+          color: #6b7280;
+          white-space: nowrap;
+        }
+
+        .review-rating {
+          display: inline-flex;
+          align-items: center;
+          gap: 2px;
+
+          mat-icon {
+            color: #f59e0b; /* amber-500 */
+            font-size: 18px;
+            height: 18px;
+            width: 18px;
+            line-height: 18px;
+          }
+        }
+      }
+
+      .review-comment {
+        color: #374151;
+        font-size: 14px;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    }
+  }
+
+  > p {
+    color: #6b7280;
+    text-align: center;
+    margin: 24px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    .review-header {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .review-date,
+    .review-rating {
+      justify-self: start;
+    }
+  }
+}

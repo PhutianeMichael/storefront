@@ -1,0 +1,79 @@
+@if (product) {
+  <mat-card class="product-item" (click)="onViewProductDetails(product.id);  $event.stopPropagation()">
+    <div class="product-item__image-container">
+      <img mat-card-image [ngSrc]="product.thumbnail" alt="{{ product.title }}" height="200" width="200"
+           [priority]="true"/>
+      <mat-icon
+        class="mat-18 favorite-icon"
+        [ngClass]="isItemInWishlist() ? 'in-wishlist' : ''"
+
+        (click)="onToggleWishlist(product); $event.stopPropagation();"
+      >favorite
+      </mat-icon>
+
+    </div>
+    <div class="product-item__details-container">
+      <mat-card-title class="product-item__title">{{ product.title }}</mat-card-title>
+      <mat-card-content>
+        <p class="product-item__description">{{ product.description }}</p>
+        @if (product.discountPercentage > 0) {
+          <span class="product-item__price discounted">{{ product.price | currency: "ZAR" }}</span>
+          <span
+            class="product-item__price discounted-price">{{ calculateDiscountedPrice(product.price, product.discountPercentage) | currency: "ZAR" }}</span>
+        } @else {
+          <span class="price">{{ product.price | currency: "ZAR" }}</span>
+        }
+      </mat-card-content>
+    </div>
+    <div class="product-item__cta-container">
+      @if (!(isProductInCart())) {
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="onAddProductToCart(product); $event.stopPropagation()"
+        >
+          Add to Cart
+          <mat-icon class="mat-18">shopping_cart</mat-icon>
+        </button>
+      }
+      @if ((isProductInCart())) {
+        <div class="increase-decrease">
+          <button mat-mini-fab color="primary"
+                  (click)="onIncreaseOrDecreaseItemQuantity(product.id, 1); $event.stopPropagation()"
+                  [disabled]="cartItemQuantity() === product.stock">
+            <mat-icon class="mat-18">add</mat-icon>
+          </button>
+          @if (cartItemQuantity()) {
+            <span>{{ cartItemQuantity() }}</span>
+          }
+          <button mat-mini-fab color="primary"
+                  (click)="onIncreaseOrDecreaseItemQuantity(product.id, -1); $event.stopPropagation()">
+            <mat-icon class="mat-18">remove</mat-icon>
+          </button>
+        </div>
+      }
+    </div>
+    <div class="ratings">
+      <span class="rating">
+        @for (star of [1, 2, 3, 4, 5]; let i = $index; track trackStar(i, star)) {
+          <mat-icon class="ratings-star" color="accent">
+            {{
+              i + 1 <= roundNum(product.rating) ? 'star' :
+                i + 1 === ceilNum(product.rating) && product.rating % 1 >= 0.5 ? 'star_half' :
+                  'star_border'
+            }}
+          </mat-icon>
+        }
+        <span class="rating-value">{{ product.rating }} / 5</span>
+        <span (click)="openDialog(product.id, product.reviews, product.rating); $event.stopPropagation();"
+              class="reviews">{{ product.reviews.length }} reviews <mat-icon
+          class="mat-18">chevron_right</mat-icon></span>
+      </span>
+      <span [ngClass]="product.availabilityStatus === 'In Stock' ? 'in-stock' : 'out-of-stock'">
+        {{ product.availabilityStatus === 'In Stock' ? 'In Stock' : 'Low Stock' }}
+      </span>
+    </div>
+  </mat-card>
+} @else {
+  <p>Product data is not available.</p>
+}

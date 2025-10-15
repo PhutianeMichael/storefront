@@ -1,0 +1,24 @@
+<button mat-stroked-button color="primary" (click)="goBackToProduct()" style="margin-bottom: 1rem;">
+  <mat-icon>arrow_back</mat-icon> Back to Product
+</button>
+
+@if(reviews() && reviews().length) {
+  <mat-list>
+    @for(review of reviews(); track $index) {
+      <mat-list-item>
+        <div class="review-header">
+          <span class="reviewer">{{ review.reviewerName }}</span>
+          <span class="review-date">{{ review.date | date }}</span>
+          <span class="review-rating">
+            @for(star of [].constructor(review.rating); track $index) {
+              <mat-icon>star</mat-icon>
+            }
+          </span>
+        </div>
+        <div class="review-comment">{{ review.comment }}</div>
+      </mat-list-item>
+    }
+  </mat-list>
+} @else {
+  <p>No reviews yet.</p>
+}

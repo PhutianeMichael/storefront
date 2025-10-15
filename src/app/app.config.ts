@@ -10,6 +10,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
+import { productFeatureKey, productReducer } from './feature/product/state/product.reducer';
+import { ProductEffects } from './feature/product/state/product.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,8 +19,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideStore(),
+    provideState(productFeatureKey, productReducer),
     provideState(authFeatureKey, authReducer),
-    provideEffects([AuthEffects]),
+    provideEffects([ProductEffects, AuthEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: false,
