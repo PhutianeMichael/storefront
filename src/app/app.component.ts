@@ -5,12 +5,13 @@ import { AppState } from './app.state';
 import { appAuthInit } from './feature/auth/state/auth.actions';
 import { Store } from '@ngrx/store';
 import { appCartInit } from './feature/cart/state/cart.actions';
+import { appWishlistInit } from './feature/wishlist/state/wishlist.actions';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, HeaderComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'storefront';
@@ -22,5 +23,6 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(appAuthInit());
     this.store.dispatch(appCartInit());
+    this.store.dispatch(appWishlistInit());
   }
 }

@@ -1,0 +1,31 @@
+<section class="wishlist-page">
+    @if (error()) {
+        <div class="error-banner">
+            <mat-icon>error_outline</mat-icon>
+            <span>Error: {{ error() }}</span>
+            <button mat-stroked-button (click)="handleOnReloadWishlist()">Retry</button>
+        </div>
+    }
+
+    @if (!isWishEmpty() && !error()) {
+        <div class="empty-wishlist-message">
+            <h3>Your wishlist is empty</h3>
+            <p>Browse our products and add them to your wishlist.</p>
+            <button mat-stroked-button color="primary" routerLink="/products">
+                <mat-icon class="mat-18">arrow_back</mat-icon>
+                Explore Products
+            </button>
+        </div>
+    }
+
+    @if (isWishEmpty() && !error()) {
+        <div class="title-container">
+            <h2>Wishlist</h2>
+            <button class="delete-cta" mat-stroked-button (click)="onClearWishlist()">
+                <mat-icon>delete</mat-icon>
+                <span>Clear Wishlist</span>
+            </button>
+        </div>
+        <app-wishlist-list (onReloadWishlist)="handleOnReloadWishlist()"></app-wishlist-list>
+    }
+</section>

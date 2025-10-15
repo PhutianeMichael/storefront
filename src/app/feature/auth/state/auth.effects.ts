@@ -8,6 +8,8 @@ import { ApiErrorResponse, LoginResponse } from '../models/auth.model';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
+import * as CartActions from '../../cart/state/cart.actions';
+import * as WishlistActions from '../../wishlist/state/wishlist.actions';
 
 @Injectable()
 export class AuthEffects {
@@ -22,6 +24,8 @@ export class AuthEffects {
       exhaustMap(action => {
         return this.authService.login(action.loginRequestBody).pipe(
           map(response => {
+            this.store.dispatch(CartActions.loadUserCart({userId: response.user.id}));
+            this.store.dispatch(WishlistActions.loadUserWishlist({userId: response.user.id}));
             this.router.navigateByUrl('/products');
             return AuthActions.loginSuccess({loginResponse: response});
           }),

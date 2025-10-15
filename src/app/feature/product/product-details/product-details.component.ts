@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map, take, tap } from 'rxjs';
 import { MatCardModule } from '@angular/material/card';
@@ -17,6 +17,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CartItem } from '../../cart/models/cart.model';
 import * as CartActions from '../../cart/state/cart.actions';
 import { selectCartItemQuantity, selectIsProductInCart } from '../../cart/state/cart.selectors';
+import { selectIsItemInWishlist } from '../../wishlist/state/wishlist.selectors';
+import * as WishlistActions from '../../wishlist/state/wishlist.actions';
+import { WishlistItem } from '../../wishlist/models/wishlist.model';
 
 @Component({
     selector: 'app-product-details',
@@ -43,7 +46,7 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
     readonly product = this.store.selectSignal(selectSelectedProduct);
     readonly isProductInCart = this.store.selectSignal(selectIsProductInCart(this.product()?.id ?? 0));
     readonly productItemQuantity = this.store.selectSignal(selectCartItemQuantity(this.product()?.id ?? 0));
-    readonly isItemInWishlist = signal(1234);
+    readonly isItemInWishlist = this.store.selectSignal(selectIsItemInWishlist(this.product()?.id ?? 0));
     readonly isLoading = this.store.selectSignal(selectProductsLoading);
     readonly error = this.store.selectSignal(selectProductsError);
     private userId = this.store.selectSignal(selectAuthUserId);
@@ -202,9 +205,24 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
         }
 
         if (this.isItemInWishlist()) {
-
+            this.store.dispatch(WishlistActions.removeItemFromWishlist({productId: product.id, userId}));
             return;
         }
 
+        const item: WishlistItem = {
+            productId: product.id,
+            title: product.title,
+            description: product.description,
+            stock: product.stock,
+            availabilityStatus: product.availabilityStatus,
+            price: product.price,
+            thumbnail: product.thumbnail,
+            sku: product.sku,
+            discountPercentage: product.discountPercentage,
+            code: product.meta.barcode,
+            category: product.category,
+        }
+
+        this.store.dispatch(WishlistActions.addItemToWishlist({item, userId}));
     }
 }
