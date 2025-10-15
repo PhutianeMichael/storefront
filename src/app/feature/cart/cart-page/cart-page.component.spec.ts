@@ -20,14 +20,14 @@ describe('CartPageComponent', () => {
       items: [],
       total: 0,
       userId: null,
-      error: null,
+      error: null
     },
     auth: {
       user: {
         id: 1757590735311,
         // add other required user properties based on your auth state
-      },
-    },
+      }
+    }
   };
 
   beforeEach(async () => {
@@ -39,16 +39,16 @@ describe('CartPageComponent', () => {
           selectors: [
             {
               selector: selectAuthUserId,
-              value: 1757590735311,
-            },
-          ],
+              value: 1757590735311
+            }
+          ]
         }),
         {provide: ActivatedRoute, useValue: {params: of({}), data: of({})}},
         provideHttpClientTesting(),
         {provide: Router, useValue: {navigate: jasmine.createSpy('navigate')}},
       ],
     })
-      .compileComponents();
+        .compileComponents();
 
     fixture = TestBed.createComponent(CartPageComponent);
     component = fixture.componentInstance;
