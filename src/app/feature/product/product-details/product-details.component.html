@@ -1,0 +1,127 @@
+@if (error()) {
+  <div class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <span>{{ error() }}</span>
+  </div>
+} @else if (isLoading()) {
+  <div class="loading-container">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+    <p>Loading product details...</p>
+  </div>
+} @else {
+  @if (product(); as product) {
+    <mat-card class="product-details-card">
+      <div class="product-details-header">
+        <img mat-card-image [src]="product.images[0]" alt="{{ product.title }}" class="product-image"/>
+        <mat-icon
+          class="mat-24 favorite-icon"
+          [ngClass]="isItemInWishlist() ? 'in-wishlist' : ''"
+          (click)="onAddOrRemoveItemFromFavourite(product); $event.stopPropagation();"
+        >favorite
+        </mat-icon>
+      </div>
+      <div class="product-details-content">
+        <h2>{{ product.title }}</h2>
+        <div class="product-info">
+          <p class="product-description">{{ product.description }}</p>
+          <div class="product-pricing">
+            @if (product.discountPercentage > 0) {
+              <span class="original-price">{{ product.price | currency: "ZAR" }}</span>
+              <span
+                class="discounted-price">{{ calculateDiscountedPrice(product.price, product.discountPercentage) | currency: "ZAR" }}</span>
+              <span class="discount-percentage">({{ product.discountPercentage }}% off)</span>
+            }
+          </div>
+          <div class="product-stock"
+               [ngClass]="product.availabilityStatus === 'In Stock' ? 'in-stock' : 'out-of-stock'">
+            {{ product.availabilityStatus === 'In Stock' ? 'In Stock' : 'Low Stock' }}
+          </div>
+
+          <div class="product-ratings">
+            <span class="rating">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                <mat-icon class="ratings-star" color="accent">
+                  {{
+                    $index + 1 <= mathRound(product.rating) ? 'star' :
+                      $index + 1 === mathCeil(product.rating) && product.rating % 1 >= 0.5 ? 'star_half' :
+                        'star_border'
+                  }}
+                </mat-icon>
+              }
+              <span class="rating-value">{{ product.rating }} / 5</span>
+              <span class="reviews">{{ product.reviews.length }} reviews</span>
+            </span>
+
+            <div class="stars-summary">
+              @for (star of [5, 4, 3, 2, 1]; track star) {
+                <div class="bar-row">
+                  <span>{{ star }}</span>
+                  <mat-icon class="star">star</mat-icon>
+                  <mat-progress-bar [ngClass]="getBarClass(star)" color="warn" mode="determinate"
+                                    [value]="getRatingsPerBar(product.reviews, star)"></mat-progress-bar>
+                  <span>{{ getRatingsPerBar(product.reviews, star) }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product-details-footer">
+        <button mat-stroked-button color="primary" (click)="goBack()">
+          <mat-icon class="mat-18">arrow_back</mat-icon>
+          Back to Products
+        </button>
+      </div>
+      <div class="product-quantity-control">
+        @if (!isProductInCart()) {
+          <button mat-stroked-button color="primary" (click)="onAddItemToCart(product)">
+            Add to Cart
+            <mat-icon class="mat-18">shopping_cart</mat-icon>
+          </button>
+        }
+
+        @if (isProductInCart()) {
+
+          <button mat-mini-fab color="primary" (click)="onIncreaseOrDecreaseItemQuantity( 1)"
+                  [disabled]="(productItemQuantity()) === product.stock">
+            <mat-icon class="mat-18">add</mat-icon>
+          </button>
+
+          @if (productItemQuantity()) {
+            <span class="quantity">{{ productItemQuantity() }}</span>
+          }
+
+          <button mat-mini-fab color="primary" (click)="onIncreaseOrDecreaseItemQuantity(-1)">
+            <mat-icon class="mat-18">remove</mat-icon>
+          </button>
+        }
+      </div>
+    </mat-card>
+
+    @if (product.reviews && product.reviews.length) {
+      <h3 class="reviews-header">Product Reviews</h3>
+      <mat-list>
+        @for (review of product.reviews; track $index) {
+          <mat-list-item>
+            <div class="review-header">
+              <span class="reviewer">{{ review.reviewerName }}</span>
+              <span class="review-date">{{ review.date | date }}</span>
+              <span class="review-rating">
+                @for (star of [].constructor(review.rating); track $index) {
+                  <mat-icon>star</mat-icon>
+                }
+              </span>
+            </div>
+            <div class="review-comment">{{ review.comment }}</div>
+          </mat-list-item>
+        }
+      </mat-list>
+    } @else {
+      <p>No reviews yet.</p>
+    }
+  } @else {
+    <div>
+      <p>Loading product details...</p>
+    </div>
+  }
+}

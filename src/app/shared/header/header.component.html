@@ -1,0 +1,55 @@
+<mat-toolbar>
+  <div class="links">
+    <span>My App</span>
+    <div class="nav-links-container">
+      <a
+        mat-button
+        routerLink="/products"
+        routerLinkActive="active"
+      >Products</a>
+      <a mat-button
+         routerLink="/wishlist"
+         routerLinkActive="active"
+      >Wishlist</a>
+    </div>
+  </div>
+  <div class="auth-cart-container">
+    @if (isUserLoggedIn()) {
+      <span class="welcome-label">Welcome {{ username() }}</span>
+      <button
+        mat-icon-button
+        class="example-icon logout"
+        aria-label="Logout icon-button"
+        routerLink="/logout"
+        routerLinkActive="active"
+        (click)="onLogout()"
+      >
+        <span></span>
+        <mat-icon>logout</mat-icon>
+      </button>
+    } @else {
+      <button
+        mat-icon-button
+        class="example-icon login"
+        aria-label="Login icon-button"
+        routerLink="/login"
+        routerLinkActive="active"
+      >
+        <span></span>
+        <mat-icon>login</mat-icon>
+      </button>
+    }
+    <button
+      mat-icon-button
+      class="example-icon cart-icon"
+      aria-label="Example icon-button with heart icon"
+      routerLink="/cart"
+      routerLinkActive="active"
+    >
+      @if (isUserLoggedIn()) {
+        <span class="cart-count">{{ cartItemCount() }}</span>
+      }
+      <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

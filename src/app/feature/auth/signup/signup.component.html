@@ -1,0 +1,200 @@
+<div class="signup-page">
+  <h1 class="signup-title">Welcome</h1>
+  <p class="signup-subtitle">Register</p>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="signup-form" autocomplete="on">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" formControlName="firstname" placeholder="Firstname"/>
+      <mat-icon matSuffix>person</mat-icon>
+      @if (firstname.touched && firstname.hasError('required')) {
+        <mat-error>First name is required</mat-error> <!-- Fixed message -->
+      }
+      @if (firstname.touched && firstname.hasError('minlength')) {
+        <mat-error>Minimum 2 characters</mat-error>
+      }
+      @if (firstname.touched && firstname.hasError('maxlength')) {
+        <mat-error>Maximum 50 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" formControlName="lastname" placeholder="Lastname"/>
+      <mat-icon matSuffix>person</mat-icon>
+      @if (lastname.touched && lastname.hasError('required')) {
+        <mat-error>Last name is required</mat-error> <!-- Fixed message -->
+      }
+      @if (lastname.touched && lastname.hasError('minlength')) {
+        <mat-error>Minimum 2 characters</mat-error>
+      }
+      @if (lastname.touched && lastname.hasError('maxlength')) {
+        <mat-error>Maximum 50 characters</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Address section -->
+    <div formArrayName="address" class="address-section">
+      <h3 class="section-title">Address</h3>
+
+      <!-- Add address array validation message -->
+      @if (address.touched && address.hasError('minAddressLength')) {
+        <mat-error class="full-width-error">At least one address is required</mat-error>
+      }
+
+      <div class="address-list">
+        @for (group of address.controls; let i = $index; track i) {
+          <div class="address-item" [formGroupName]="i">
+            <div class="address-header">
+              <span class="address-heading">Address {{ i + 1 }}</span>
+              @if (address.length > 1) {
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="warn"
+                  aria-label="Remove address"
+                  (click)="removeAddress(i)">
+                  <mat-icon class="delete-cta">delete</mat-icon>
+                </button>
+              }
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Street</mat-label>
+              <input matInput formControlName="street" placeholder="123 Main St"/>
+              @if (hasError(group.get('street'), 'required')) {
+                <mat-error>Street is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>City</mat-label>
+              <input matInput formControlName="city" placeholder="City"/>
+              @if (hasError(group.get('city'), 'required')) {
+                <mat-error>City is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Province/State</mat-label>
+              <input matInput formControlName="provinceOrState" placeholder="Province or State"/>
+              @if (hasError(group.get('provinceOrState'), 'required')) {
+                <mat-error>Province/State is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Postal/Zip Code</mat-label>
+              <input matInput formControlName="code" placeholder="Postal/Zip Code"/>
+              @if (hasError(group.get('code'), 'required')) {
+                <mat-error>Postal/Zip code is required</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country" placeholder="Country"/>
+              @if (hasError(group.get('country'), 'required')) {
+                <mat-error>Country is required</mat-error>
+              }
+            </mat-form-field>
+          </div>
+        }
+      </div>
+
+      <button class="add-address-cta" type="button" mat-stroked-button color="primary" (click)="addAddress()">
+        <mat-icon class="left">add</mat-icon>
+        <span>Add another address</span>
+      </button>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" placeholder="you@example.com"/>
+      <mat-icon matSuffix>mail</mat-icon>
+      @if (email.touched && email.hasError('required')) {
+        <mat-error>Email is required</mat-error>
+      }
+      @if (email.touched && email.hasError('email')) {
+        <mat-error>Enter a valid email</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        [type]="hidePassword ? 'password' : 'text'"
+        formControlName="password"
+        placeholder="••••••••"
+      />
+      <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Toggle password visibility'">
+        <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      @if (password.touched && password.hasError('required')) {
+        <mat-error>Password is required</mat-error>
+      }
+      @if (password.touched && password.hasError('minlength')) {
+        <mat-error>Minimum 6 characters</mat-error>
+      }
+      @if (password.touched && password.hasError('pattern')) {
+        <mat-error>Password must contain special characters letters and numbers</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input
+        matInput
+        [type]="hideConfirmPassword ? 'password' : 'text'"
+        formControlName="confirmPassword"
+        placeholder="••••••••"
+      />
+      <button type="button" mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword"
+              [attr.aria-label]="'Toggle password visibility'">
+        <mat-icon>{{ hideConfirmPassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+      </button>
+      @if (confirmPassword.touched && confirmPassword.hasError('required')) {
+        <mat-error>Confirm Password is required</mat-error>
+      }
+      @if (confirmPassword.touched && form.hasError('passwordsMismatch')) {
+        <mat-error>Passwords do not match</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Add terms acceptance checkbox -->
+    <mat-checkbox formControlName="acceptTerms" class="full-width terms-checkbox">
+      I accept the terms and conditions
+    </mat-checkbox>
+    @if (acceptTerms.touched && acceptTerms.hasError('requiredTrue')) {
+      <mat-error class="full-width-error">You must accept the terms and conditions</mat-error>
+    }
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="submit-btn"
+      type="submit"
+      [disabled]="form.invalid || loading()"
+    >
+      @if (!loading()) {
+        <ng-container>
+          <mat-icon class="left btn-icon">person_add</mat-icon>
+          <span class="btn-label">Sign up</span>
+        </ng-container>
+      } @else {
+        <span>Signing up…</span> <!-- Fixed text -->
+      }
+    </button>
+
+    @if (errorMessage()) {
+      <div class="error">{{ errorMessage() }}</div>
+    }
+
+    <p class="signup-hint">
+      Have an Account?
+      <a class="link" routerLink="/login">Login</a>
+    </p>
+  </form>
+</div>

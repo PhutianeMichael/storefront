@@ -1,0 +1,48 @@
+@if (cartItem) {
+  <div class="cart-list-item-wrapper">
+    <mat-card class="cart-item">
+      <div class="cart-item__image-container">
+        <img class="image" [ngSrc]="cartItem.thumbnail" [alt]="cartItem.title" width="90" height="90"/>
+      </div>
+      <div class="cart-item__details-container">
+        <div class="cart-item__title-row">
+          <span class="cart-item__title">{{ cartItem.title }}</span>
+        </div>
+        <div class="cart-item__desc-row">
+          <span class="cart-item__description">{{ cartItem.description }}</span>
+        </div>
+        <div class="cart-item__status-row">
+                    <span class="cart-item__availability" [ngClass]="itemStockStatus(cartItem.availabilityStatus)">
+            {{ cartItem.availabilityStatus }}
+          </span>
+        </div>
+      </div>
+      <div class="cart-item__actions-row">
+        @if (cartItemTotal()) {
+          <span class="cart-item__total">Total: R {{ cartItemTotal() | number:'1.0-0' }}</span>
+        }
+        <div class="cart-item__qty-select">
+          @if (cartItemQuantity()) {
+            <span>Qty:</span>
+            <mat-form-field appearance="outline" class="qty-field">
+              <mat-select [value]="cartItemQuantity()"
+                          (selectionChange)="onQuantityChange($event.value, cartItem.stock)">
+                @for (qty of getQuantityOptions(cartItem.stock, cartItemQuantity()); track trackQuantity($index)) {
+                  <mat-option [value]="qty.value">{{ qty.label }}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          }
+        </div>
+        <div class="cart-cta-group">
+          <button class="delete-cta" mat-stroked-button (click)="onRemove()">
+            <mat-icon>delete</mat-icon>
+            <span>Remove</span></button>
+          <button class="move-to-list-cta" mat-stroked-button (click)="onMoveToList(cartItem)">
+            <mat-icon>favorite</mat-icon>
+            <span>Move to List</span></button>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+}

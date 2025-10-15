@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>Product Ratings</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="stars-container">
+    <div class="star">
+      <mat-icon class="mat-18">star</mat-icon>
+      <span class="average-rating">{{data.rating}} out of 5 ({{data.reviews.length}} Reviews)</span>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="stars-summary">
+    @for(star of [5, 4, 3, 2, 1]; let i = $index; track trackStarBar(i, star)) {
+      <div class="bar-row">
+        <span>star</span>
+        <mat-icon class="star" >star</mat-icon>
+        <mat-progress-bar  [ngClass]="getBarClass(star)" color="warn" mode="determinate" [value]="getRatingsPercentage(data.reviews, star)"></mat-progress-bar>
+        <span>{{getRatingsPerBar(data.reviews, star)}}</span>
+      </div>
+    }
+  </div>
+  <mat-divider></mat-divider>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-stroked-button [mat-dialog-close]="true" cdkFocusInitial (click)="onShowReviews()">Show Reviews</button>
+  <button mat-stroked-button class="danger" mat-dialog-close (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>

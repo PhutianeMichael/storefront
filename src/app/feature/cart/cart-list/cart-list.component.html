@@ -1,0 +1,25 @@
+<div class="cart-items">
+  @for (cartItem of cartItems(); track cartItem.productId) {
+    <app-cart-list-item
+      [cartItemInput]="cartItem"
+    ></app-cart-list-item>
+  }
+  <div class="cart-payment-summary">
+    <h2>Cart Summary</h2>
+    <div class="count-and-total">
+      @if (!!cartItemCount()) {
+        <div class="item-count">
+          <span>Total:</span>
+          <span>{{ cartItemCount() }} items</span>
+        </div>
+      }
+      @if (!!cartTotal) {
+        <div class="total-amount">
+          <span>Total:</span>
+          <span>R {{ cartTotal() | number:'1.0-0' }}</span>
+        </div>
+      }
+    </div>
+    <button mat-stroked-button color="primary" class="checkout-cta">Proceed to Checkout</button>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+.mat-mdc-dialog-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #3b3b3b;
+  text-align: center;
+}
+mat-dialog-content {
+  div.stars-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    div.star {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+      .mat-icon {
+        color: #cd7f32;
+      }
+
+      span {
+        font-size: 14px;
+        color: #3b3b3b;
+        font-weight: 600;
+        margin-left: 4px;
+      }
+    }
+    span {
+      font-size: 14px;
+      color: #3b3b3b;
+      font-weight: 600;
+    }
+  }
+  mat-divider {
+    margin: 16px 0;
+  }
+  .stars-summary {
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      .star {
+        color: #cd7f32;
+        margin-left: 4px;
+        font-size: 22px;
+      }
+      mat-progress-bar {
+        flex: 1;
+        height: 4px;
+        border-radius: 8px;
+        background-color: #e0e0e0;
+      }
+    }
+  }
+}
+.mat-mdc-dialog-actions.mat-mdc-dialog-actions-align-end, .mat-mdc-dialog-actions[align=end] {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px 16px 24px;
+  button {
+    //background-color: #1976d2;
+    color: #8bacd3;
+    border-radius: 10px;
+    border-color: #8bacd3;
+    //font-weight: 600;
+    &:hover {
+      background-color: #8bacd3;
+      color: white;
+    }
+  }
+  button.danger {
+    color: #e16666;
+    border-color: #e16666;
+    &:hover {
+      background-color: #e16666;
+      color: white;
+    }
+  }
+}
+.five-star-bar {
+  --mdc-linear-progress-active-indicator-color: #00a93b;
+  height: 10px;
+}
+.four-star-bar {
+  --mdc-linear-progress-active-indicator-color: #96d900;
+}
+
+.three-star-bar {
+  --mdc-linear-progress-active-indicator-color: #fae700;
+}
+
+.two-star-bar {
+  --mdc-linear-progress-active-indicator-color: #ffa200;
+}
+
+.one-star-bar {
+  --mdc-linear-progress-active-indicator-color: #ff1800;
+}
+
+mat-progress-bar {
+  --mdc-linear-progress-track-color: #e0e0e0;         /* unfilled track */
+  --mdc-linear-progress-buffer-color: #cccccc;
+  height: 8px;
+}

@@ -1,0 +1,124 @@
+@if (loading()) {
+  <div class="loading-container">
+    <mat-spinner diameter="40"></mat-spinner>
+    <p>Loading products...</p>
+  </div>
+} @else if (error()) {
+  <div class="error-container">
+    <mat-icon>error_outline</mat-icon>
+    <p class="error">{{ error() }}</p>
+  </div>
+} @else {
+  <div class="product-list">
+
+    <!-- Filter and Search Controls -->
+    <div class="filter-controls">
+      <!-- Search Bar -->
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search products</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Search by name, brand, category..."
+          [formControl]="searchControl"
+        >
+        <button
+          matSuffix
+          mat-icon-button
+          aria-label="Clear search"
+          (click)="clearSearch()"
+          *ngIf="searchControl.value"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Category Filter -->
+      <mat-form-field appearance="outline" class="category-field">
+        <mat-label>Category</mat-label>
+        <mat-select [formControl]="categoryControl">
+          <mat-option [value]="null">All Categories</mat-option>
+          @for (category of categories(); track category) {
+            <mat-option [value]="category">{{ category | titlecase }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Sort Filter -->
+      <mat-form-field appearance="outline" class="sort-field">
+        <mat-label>Sort by</mat-label>
+        <mat-select [formControl]="sortControl">
+          @for (option of sortOptions; track option.value) {
+            <mat-option [value]="option.value">{{ option.label }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Clear Filters Button -->
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="clearAllFilters()"
+        [disabled]="!hasActiveFilters"
+        class="clear-filters-btn"
+      >
+        <mat-icon>clear_all</mat-icon>
+        Clear Filters
+      </button>
+    </div>
+
+    <!-- Results Count -->
+    @if (products()) {
+      <div class="results-info" *ngIf="products() !== null && filteredProductsCount() !== null">
+        <p>
+          Showing {{ products().length || 0 }}
+          of {{ totalCount() || 0 }} filtered products
+          @if (searchControl.value) {
+            for "{{ searchControl.value }}"
+          }
+        </p>
+      </div>
+    }
+
+    <!-- Products Grid -->
+    @if (products() && products().length === 0) {
+      <div class="no-products">
+        <mat-icon>search_off</mat-icon>
+        <h3>No products found</h3>
+        <p>Try adjusting your search or filters</p>
+        <button mat-raised-button color="primary" (click)="clearAllFilters()">
+          Clear all filters
+        </button>
+      </div>
+    } @else {
+      @if (products()) {
+        <h1>Product List</h1>
+        <div class="item-container">
+          @for (product of products(); track trackByProductId($index, product)) {
+            <app-product-list-item
+              [productInput]="product"
+            ></app-product-list-item>
+          }
+        </div>
+
+        <!-- Load More Button -->
+        @if (!!hasMore) {
+          <div class="load-more-container">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="loadMore()"
+              [disabled]="loading()"
+            >
+              <mat-icon>expand_more</mat-icon>
+              Load More Products
+            </button>
+          </div>
+        }
+      } @else {
+        <p>Error loading products. Please try again later.</p>
+      }
+    }
+  </div>
+}
