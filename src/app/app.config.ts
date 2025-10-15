@@ -12,6 +12,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './in-memory-data.service';
 import { productFeatureKey, productReducer } from './feature/product/state/product.reducer';
 import { ProductEffects } from './feature/product/state/product.effects';
+import { cartFeatureKey, cartReducer } from './feature/cart/state/cart.reducer';
+import { CartEffects } from './feature/cart/state/cart.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,8 +22,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideStore(),
     provideState(productFeatureKey, productReducer),
+    provideState(cartFeatureKey, cartReducer),
     provideState(authFeatureKey, authReducer),
-    provideEffects([ProductEffects, AuthEffects]),
+    provideEffects([ProductEffects, AuthEffects, CartEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: false,

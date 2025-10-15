@@ -12,6 +12,10 @@ export const routes: Routes = [
     resolve: {productsLoaded: ProductListResolver},
   },
   {
+    path: 'cart',
+    loadComponent: () => import('./feature/cart/cart-page/cart-page.component').then(m => m.CartPageComponent),
+  },
+  {
     path: 'login',
     loadComponent: () => import('./feature/auth/login/login.component').then(m => m.LoginComponent),
   },

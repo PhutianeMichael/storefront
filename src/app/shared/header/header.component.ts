@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -7,6 +7,8 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { selectAuthUserId, selectIsAuthenticated, selectUsername } from '../../feature/auth/state/auth.selectors';
 import { logout } from '../../feature/auth/state/auth.actions';
+import * as CartActions from '../../feature/cart/state/cart.actions'
+import { selectCartItemCount } from '../../feature/cart/state/cart.selectors';
 
 @Component({
   selector: 'app-header',
@@ -23,7 +25,7 @@ import { logout } from '../../feature/auth/state/auth.actions';
 })
 export class HeaderComponent {
   readonly store = inject(Store<AppState>);
-  readonly cartItemCount = signal(0);
+  readonly cartItemCount = this.store.selectSignal(selectCartItemCount);
   readonly isUserLoggedIn = this.store.selectSignal(selectIsAuthenticated);
   readonly username = this.store.selectSignal(selectUsername);
   private userId = this.store.selectSignal(selectAuthUserId);
@@ -37,6 +39,7 @@ export class HeaderComponent {
       return;
     }
 
+    this.store.dispatch(CartActions.clearCartOnLogout({userId}));
     this.store.dispatch(logout());
   }
 }
