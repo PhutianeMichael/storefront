@@ -93,7 +93,6 @@ export interface ProductsResponse {
   limit: number;
 }
 
-
 export interface ProductReviewsDialogData {
   reviews: Review[]
   rating: number

@@ -4,12 +4,12 @@ import { ProductListResolver } from './feature/product/services/product-list.res
 
 export const routes: Routes = [
   {
-    path: '', redirectTo: 'products', pathMatch: 'full'
+    path: '', redirectTo: 'products', pathMatch: 'full',
   },
   {
     path: 'products',
     component: ProductListComponent,
-    resolve: { productsLoaded: ProductListResolver }
+    resolve: {productsLoaded: ProductListResolver},
   },
   {
     path: 'login',
@@ -20,13 +20,14 @@ export const routes: Routes = [
     loadComponent: () => import('./feature/auth/signup/signup.component').then(m => m.SignupComponent),
   },
   {
-    path: 'products/:id', loadComponent: () => import('./feature/product/product-details/product-details.component').then(m => m.ProductDetailsComponent)
+    path: 'products/:id',
+    loadComponent: () => import('./feature/product/product-details/product-details.component').then(m => m.ProductDetailsComponent),
   },
   {
     path: 'products/:id/reviews',
-    loadComponent: () => import('./feature/product/components/product-reviews/product-reviews.component').then(m => m.ProductReviewsComponent)
+    loadComponent: () => import('./feature/product/components/product-reviews/product-reviews.component').then(m => m.ProductReviewsComponent),
   },
   {
-    path: '**', redirectTo: 'products'
-  }
+    path: '**', redirectTo: 'products',
+  },
 ];

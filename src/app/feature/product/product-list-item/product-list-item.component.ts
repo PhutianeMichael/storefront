@@ -103,7 +103,6 @@ export class ProductListItemComponent {
       return;
     }
 
-
   }
 
   /**
@@ -129,7 +128,6 @@ export class ProductListItemComponent {
     if (this.isItemInWishlist()) {
       return;
     }
-
 
   }
 

@@ -39,8 +39,8 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
   readonly product = this.store.selectSignal(selectSelectedProduct);
   readonly isProductInCart = signal(1234);
-  readonly productItemQuantity  = signal(1234);
-  readonly isItemInWishlist  = signal(1234);
+  readonly productItemQuantity = signal(1234);
+  readonly isItemInWishlist = signal(1234);
   readonly isLoading = this.store.selectSignal(selectProductsLoading);
   readonly error = this.store.selectSignal(selectProductsError);
   private userId = this.store.selectSignal(selectAuthUserId);
@@ -181,7 +181,6 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
 
       return;
     }
-
 
   }
 }

@@ -27,7 +27,8 @@
           <div class="product-pricing">
             @if (product.discountPercentage > 0) {
               <span class="original-price">{{ product.price | currency: "ZAR" }}</span>
-              <span class="discounted-price">{{ calculateDiscountedPrice(product.price, product.discountPercentage) | currency: "ZAR" }}</span>
+              <span
+                class="discounted-price">{{ calculateDiscountedPrice(product.price, product.discountPercentage) | currency: "ZAR" }}</span>
               <span class="discount-percentage">({{ product.discountPercentage }}% off)</span>
             }
           </div>
