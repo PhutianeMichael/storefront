@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { CartItem, CartState } from '../models/cart.model';
 import * as CartActions from './cart.actions';
+import { AppState } from '../../../app.state';
 
 export const initialState: CartState = {
     userId: null,
@@ -64,9 +65,9 @@ export const cartReducer = createReducer(
                 if (index === existingItemIndex) {
                     const qty = product.quantity + item.quantity;
                     const itemQty = qty < item.stock ? qty : item.stock;
-                    return  {
+                    return {
                         ...item,
-                        quantity: itemQty
+                        quantity: itemQty,
                     }
                 }
                 return item;
@@ -105,9 +106,9 @@ export const cartReducer = createReducer(
                     if (item.productId === productId) {
                         const qty = quantity + item.quantity;
                         const itemQty = qty < item.stock ? qty : item.stock;
-                        return  {
-                        ...item,
-                            quantity: Math.max(0, itemQty)
+                        return {
+                            ...item,
+                            quantity: Math.max(0, itemQty),
                         }
                     }
                     return item;
@@ -165,5 +166,7 @@ export const cartReducer = createReducer(
         return {...state, error, items: [], total: 0, itemCount: 0};
     }),
 );
+
+export const selectCartState = (state: AppState) => state.cart;
 
 export const cartFeatureKey = 'cart';

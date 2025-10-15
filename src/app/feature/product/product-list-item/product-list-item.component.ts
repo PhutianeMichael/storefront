@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, Input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Product, Review } from '../models/product.model';
@@ -15,6 +15,9 @@ import { ProductReviewsDialogComponent } from '../components/product-reviews-dia
 import * as CartActions from '../../cart/state/cart.actions';
 import { CartItem } from '../../cart/models/cart.model';
 import { selectCartItemQuantity, selectIsProductInCart } from '../../cart/state/cart.selectors';
+import { selectIsItemInWishlist } from '../../wishlist/state/wishlist.selectors';
+import * as WishlistActions from '../../wishlist/state/wishlist.actions';
+import { WishlistItem } from '../../wishlist/models/wishlist.model';
 
 @Component({
     selector: 'app-product-list-item',
@@ -130,9 +133,24 @@ export class ProductListItemComponent {
         }
 
         if (this.isItemInWishlist()) {
+            this.store.dispatch(WishlistActions.removeItemFromWishlist({productId: product.id, userId}));
             return;
         }
 
+        const item: WishlistItem = {
+            productId: product.id,
+            title: product.title,
+            description: product.description,
+            stock: product.stock,
+            availabilityStatus: product.availabilityStatus,
+            price: product.price,
+            thumbnail: product.thumbnail,
+            category: product.category,
+            discountPercentage: product.discountPercentage,
+            code: product.meta.barcode,
+            sku: product.sku,
+        }
+        this.store.dispatch(WishlistActions.addItemToWishlist({item, userId}));
     }
 
     /**
@@ -188,6 +206,6 @@ export class ProductListItemComponent {
     private initSignals(product: Product) {
         this.isProductInCart = this.store.selectSignal(selectIsProductInCart(product.id));
         this.cartItemQuantity = this.store.selectSignal(selectCartItemQuantity(product.id));
-        this.isItemInWishlist = signal(false);
+        this.isItemInWishlist = this.store.selectSignal(selectIsItemInWishlist(product.id));
     }
 }

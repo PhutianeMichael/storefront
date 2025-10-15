@@ -14,6 +14,8 @@ import { productFeatureKey, productReducer } from './feature/product/state/produ
 import { ProductEffects } from './feature/product/state/product.effects';
 import { cartFeatureKey, cartReducer } from './feature/cart/state/cart.reducer';
 import { CartEffects } from './feature/cart/state/cart.effects';
+import { wishlistFeatureKey, wishlistReducer } from './feature/wishlist/state/wishlist.reducer';
+import { WishlistEffects } from './feature/wishlist/state/wishlist.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +26,8 @@ export const appConfig: ApplicationConfig = {
     provideState(productFeatureKey, productReducer),
     provideState(cartFeatureKey, cartReducer),
     provideState(authFeatureKey, authReducer),
-    provideEffects([ProductEffects, AuthEffects, CartEffects]),
+    provideState(wishlistFeatureKey, wishlistReducer),
+    provideEffects([ProductEffects, AuthEffects, CartEffects, WishlistEffects]),
     provideStoreDevtools({
       maxAge: 25,
       logOnly: false,

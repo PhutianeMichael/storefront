@@ -1,0 +1,38 @@
+@if (wishlistItem) {
+    <div class="wishlist-list-item-wrapper" role="listitem">
+        <mat-card class="wishlist-item">
+            <div class="wishlist-item__image-container">
+                <img class="image" [ngSrc]="wishlistItem.thumbnail" [alt]="wishlistItem.title" width="90" height="90" />
+            </div>
+            <div class="wishlist-item__details-container">
+                <div class="wishlist-item__title-row">
+                    <span class="wishlist-item__title">{{wishlistItem.title}}</span>
+                </div>
+                <div class="wishlist-item__desc-row">
+                    <span class="wishlist-item__description">{{wishlistItem.description}}</span>
+                </div>
+                <div class="wishlist-item__status-row">
+                    <span class="wishlist-item__availability" [ngClass]="itemStockStatus(wishlistItem.availabilityStatus)">
+          {{ wishlistItem.availabilityStatus }}
+        </span>
+                </div>
+                <div class="wishlist-item__actions-row">
+                    <div class="wishlist-cta-group">
+                        <button class="delete-cta" mat-stroked-button
+                                (click)="onRemoveFromWishlist(wishlistItem.productId)"
+                                [attr.aria-label]="'Remove ' + wishlistItem.title + ' from wishlist'">
+                            <mat-icon>delete</mat-icon>
+                            <span>Remove</span>
+                        </button>
+                        <button class="move-to-list-cta" mat-stroked-button
+                                (click)="addToCart(wishlistItem)"
+                                [attr.aria-label]="'Move ' + wishlistItem.title + ' to cart'">
+                            <mat-icon>shopping_cart</mat-icon>
+                            <span>Move to cart</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+}

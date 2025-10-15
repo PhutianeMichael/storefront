@@ -9,6 +9,7 @@ import { selectAuthUserId, selectIsAuthenticated, selectUsername } from '../../f
 import { logout } from '../../feature/auth/state/auth.actions';
 import * as CartActions from '../../feature/cart/state/cart.actions'
 import { selectCartItemCount } from '../../feature/cart/state/cart.selectors';
+import * as WishlistActions from '../../feature/wishlist/state/wishlist.actions';
 
 @Component({
   selector: 'app-header',
@@ -40,6 +41,7 @@ export class HeaderComponent {
     }
 
     this.store.dispatch(CartActions.clearCartOnLogout({userId}));
+    this.store.dispatch(WishlistActions.clearWishlistOnLogout({userId}));
     this.store.dispatch(logout());
   }
 }

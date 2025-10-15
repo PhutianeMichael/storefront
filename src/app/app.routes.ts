@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { ProductListComponent } from './feature/product/product-list/product-list.component';
 import { ProductListResolver } from './feature/product/services/product-list.resolver';
+import { authGuard } from './feature/auth/services/auth.guard';
 
 export const routes: Routes = [
   {
@@ -13,7 +14,13 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
+    canActivate: [authGuard],
     loadComponent: () => import('./feature/cart/cart-page/cart-page.component').then(m => m.CartPageComponent),
+  },
+  {
+    path: 'wishlist',
+    canActivate: [authGuard],
+    loadComponent: () => import('./feature/wishlist/wishlist-page/wishlist-page.component').then(m => m.WishlistPageComponent),
   },
   {
     path: 'login',

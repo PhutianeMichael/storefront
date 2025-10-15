@@ -1,0 +1,24 @@
+<div class="cart-items">
+    @if (loading()) {
+        <div class="loading-state">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Loading your wishlist...</p>
+        </div>
+    }
+
+    @if (error()) {
+        <div class="error-state">
+            <mat-icon>error_outline</mat-icon>
+            <p>Failed to load wishlist: {{ error() }}</p>
+            <button mat-stroked-button (click)="onReloadWishlist.emit({reload: true})">Try Again</button>
+        </div>
+    }
+
+    @if (!loading() && !error()) {
+        @for (wishlistItem of wishlistItems(); track trackByWishlistId(wishlistItem)) {
+            <app-wishlist-list-item
+                    [wishlistItem]="wishlistItem"
+            ></app-wishlist-list-item>
+        }
+    }
+</div>
